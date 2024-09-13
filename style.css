@@ -1,0 +1,126 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #c0d9f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 960px;
+    margin: 40px auto;
+    background: #dde4eb;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+/* Form Styling */
+.form {
+    margin: 20px 0;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #152c46;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Resume Styling */
+.resume-container {
+    margin-top: 40px;
+    padding: 20px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+.resume-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.resume-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.resume-header h3 {
+    font-size: 28px;
+    margin: 0;
+    color: #007bff;
+}
+
+.resume-section {
+    margin-bottom: 20px;
+}
+
+.resume-section h4 {
+    font-size: 18px;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.resume-section p {
+    margin: 20px 2px;
+    color: #555;
+}
+
+/* Editable Styles */
+[contenteditable="true"] {
+    background-color: #f4f4f4;
+    border: 1px dashed #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: text;
+}
+
+/* Profile Picture Edit Button */
+#edit-profile-picture {
+    margin-left: auto;
+    color: #007bff;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
