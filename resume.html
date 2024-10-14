@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Resume</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="resume-container">
+        <div class="resume-header">
+            <img id="profile-picture" alt="Profile Picture" />
+            <h3 id="resume-name"></h3>
+        </div>
+        <div class="resume-section">
+            <p><strong>Email:</strong> <span id="resume-email"></span></p>
+            <p><strong>Phone:</strong> <span id="resume-phone"></span></p>
+        </div>
+        <div class="resume-section">
+            <h4>Education</h4>
+            <p id="resume-education"></p>
+        </div>
+        <div class="resume-section">
+            <h4>Work Experience</h4>
+            <p id="resume-workExperience"></p>
+        </div>
+        <div class="resume-section">
+            <h4>Skills</h4>
+            <p id="resume-skills"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const user = params.get('user');
+
+            // Fetch resume data from localStorage
+            const resumeData = JSON.parse(localStorage.getItem('resumeData'));
+
+            if (resumeData && resumeData.name.toLowerCase().replace(/\s+/g, '-') === user) {
+                document.getElementById('resume-name').textContent = resumeData.name;
+                document.getElementById('resume-email').textContent = resumeData.email;
+                document.getElementById('resume-phone').textContent = resumeData.phone;
+                document.getElementById('resume-education').textContent = resumeData.education;
+                document.getElementById('resume-workExperience').textContent = resumeData.workExperience;
+                document.getElementById('resume-skills').textContent = resumeData.skills;
+
+                if (resumeData.profilePicture) {
+                    document.getElementById('profile-picture').src = resumeData.profilePicture;
+                }
+            } else {
+                alert("Resume not found. Please generate a new resume.");
+            }
+        });
+    </script>
+</body>
+</html>
