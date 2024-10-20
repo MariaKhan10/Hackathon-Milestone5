@@ -1,0 +1,16 @@
+{
+  "name": "milestone05",
+  "version": "1.0.0",
+  "description": "Generated a unique URL for each resume based on the user’s username, and allow the resume to be shared and downloaded.\r https://hackathon-milestone5-mu.vercel.app/",
+  "main": "script.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.7.7"
+  }
+}

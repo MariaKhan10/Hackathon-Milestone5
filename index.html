@@ -22,26 +22,42 @@
                 <label for="phone">Mobile Number:</label>
                 <input type="tel" id="phone" required placeholder="Your Mobile Number" />
 
-                <label for="profilePicture">Upload Profile Picture:</label>
-                <input type="file" id="profilePicture" accept="image/*" required />
+                <label for="profile-picture">Upload Profile Picture:</label>
+                <input type="file" id="profile-picture" accept="image/*" required />
+                
             </div>
 
-            <div class="section">
+            <div class="section" id="education-section">
                 <h2>Education</h2>
-                <label for="education">Education:</label>
-                <input type="text" id="education" required placeholder="Your Education Background" />
+                <div class="education-item">
+                    <label for="education">Education:</label>
+                    <input type="text" id="education" required placeholder="Your Education Background" />
+                    <label for="educationYear">Year:</label>
+                    <input type="text" id="educationYear" placeholder="Year of Completion" />
+                </div>
+                <button type="button" id="add-education">Add More Education</button>
             </div>
 
-            <div class="section">
+            <div class="section" id="experience-section">
                 <h2>Work Experience</h2>
-                <label for="workExperience">Work Experience:</label>
-                <input type="text" id="workExperience" required placeholder="Your Work Experience" />
+                <div class="experience-item">
+                    <label for="workExperience">Work Experience:</label>
+                    <input type="text" id="workExperience" required placeholder="Your Work Experience" />
+                    <label for="experienceYear">Year:</label>
+                    <input type="text" id="experienceYear" placeholder="Year of Experience" />
+                </div>
+                <button type="button" id="add-experience">Add More Experience</button>
             </div>
 
-            <div class="section">
+            <div class="section" id="skills-section">
                 <h2>Skills</h2>
-                <label for="skills">Skills:</label>
-                <input type="text" id="skills" required placeholder="Your Key Skills" />
+                <div class="skills-item">
+                    <label for="skills">Skills:</label>
+                    <input type="text" id="skills" required placeholder="Your Key Skills" />
+                    <label for="skillYear">Year:</label>
+                    <input type="text" id="skillYear" placeholder="Year of Proficiency" />
+                </div>
+                <button type="button" id="add-skills">Add More Skills</button>
             </div>
 
             <button type="submit">Generate Resume</button>
@@ -51,7 +67,6 @@
 
         <div id="resume-preview" class="resume-container"></div>
 
-        
         <div id="share-download-options" style="display: none;">
             <p id="resume-link"></p>
             <button id="share-link-btn">Copy Link</button>
@@ -60,8 +75,6 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-

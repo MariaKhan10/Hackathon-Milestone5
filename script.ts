@@ -8,42 +8,92 @@ document.addEventListener('DOMContentLoaded', function (): void {
     const shareLinkBtn: HTMLElement | null = document.getElementById('share-link-btn');
     const downloadPdfBtn: HTMLElement | null = document.getElementById('download-pdf-btn');
 
+    // Function to dynamically add more Education fields
+    const addEducationBtn: HTMLElement | null = document.getElementById('add-education');
+    addEducationBtn?.addEventListener('click', function (): void {
+        const educationSection = document.getElementById('education-section') as HTMLElement;
+        const educationItem = document.createElement('div');
+        educationItem.classList.add('education-item');
+        educationItem.innerHTML = `
+            <label>Education:</label>
+            <input type="text" placeholder="Your Education Background" />
+            <label>Year:</label>
+            <input type="text" placeholder="Year of Completion" />
+        `;
+        educationSection.appendChild(educationItem);
+    });
+
+    // Function to dynamically add more Experience fields
+    const addExperienceBtn: HTMLElement | null = document.getElementById('add-experience');
+    addExperienceBtn?.addEventListener('click', function (): void {
+        const experienceSection = document.getElementById('experience-section') as HTMLElement;
+        const experienceItem = document.createElement('div');
+        experienceItem.classList.add('experience-item');
+        experienceItem.innerHTML = `
+            <label>Work Experience:</label>
+            <input type="text" placeholder="Your Work Experience" />
+            <label>Year:</label>
+            <input type="text" placeholder="Year of Experience" />
+        `;
+        experienceSection.appendChild(experienceItem);
+    });
+
+    // Function to dynamically add more Skills fields
+    const addSkillsBtn: HTMLElement | null = document.getElementById('add-skills');
+    addSkillsBtn?.addEventListener('click', function (): void {
+        const skillsSection = document.getElementById('skills-section') as HTMLElement;
+        const skillsItem = document.createElement('div');
+        skillsItem.classList.add('skills-item');
+        skillsItem.innerHTML = `
+            <label>Skills:</label>
+            <input type="text" placeholder="Your Key Skills" />
+            <label>Year:</label>
+            <input type="text" placeholder="Year of Proficiency" />
+        `;
+        skillsSection.appendChild(skillsItem);
+    });
+
+    // Form submission event to generate the resume preview
     form?.addEventListener('submit', function (e: Event): void {
         e.preventDefault();
 
         const name: string = (document.getElementById('name') as HTMLInputElement).value;
         const email: string = (document.getElementById('email') as HTMLInputElement).value;
         const phone: string = (document.getElementById('phone') as HTMLInputElement).value;
-        const education: string = (document.getElementById('education') as HTMLInputElement).value;
-        const workExperience: string = (document.getElementById('workExperience') as HTMLInputElement).value;
-        const skills: string = (document.getElementById('skills') as HTMLInputElement).value;
-        const profilePicture: File | null = (document.getElementById('profilePicture') as HTMLInputElement).files?.[0] || null;
 
-        if (!name || !email || !phone || !education || !workExperience || !skills) {
-            alert('Please fill in all required fields.');
-            return;
-        }
+        // Get profile picture
+        const profilePictureInput = document.getElementById('profile-picture') as HTMLInputElement;
+        const profilePictureFile = profilePictureInput.files?.[0];
+        const reader = new FileReader();
 
-        // Prepare the profile picture and save the data
-        const reader: FileReader = new FileReader();
         reader.onload = function (event: ProgressEvent<FileReader>): void {
             const imageUrl: string = event.target?.result as string;
-            // Save the resume data in localStorage
-            const resumeData = {
-                name,
-                email,
-                phone,
-                education,
-                workExperience,
-                skills,
-                profilePicture: imageUrl,
-            };
-            localStorage.setItem('resumeData', JSON.stringify(resumeData));
 
-            // Display resume preview
+            // Get all Education fields
+            const educationItems = document.querySelectorAll('.education-item');
+            const educationData = Array.from(educationItems).map(item => ({
+                education: (item.querySelector('input[placeholder="Your Education Background"]') as HTMLInputElement).value,
+                year: (item.querySelector('input[placeholder="Year of Completion"]') as HTMLInputElement).value,
+            }));
+
+            // Get all Experience fields
+            const experienceItems = document.querySelectorAll('.experience-item');
+            const experienceData = Array.from(experienceItems).map(item => ({
+                workExperience: (item.querySelector('input[placeholder="Your Work Experience"]') as HTMLInputElement).value,
+                year: (item.querySelector('input[placeholder="Year of Experience"]') as HTMLInputElement).value,
+            }));
+
+            // Get all Skills fields
+            const skillsItems = document.querySelectorAll('.skills-item');
+            const skillsData = Array.from(skillsItems).map(item => ({
+                skill: (item.querySelector('input[placeholder="Your Key Skills"]') as HTMLInputElement).value,
+                year: (item.querySelector('input[placeholder="Year of Proficiency"]') as HTMLInputElement).value,
+            }));
+
+            // Build the resume preview with user data
             resumePreview!.innerHTML = `
                 <div class="resume-header">
-                    <img src="${imageUrl}" alt="Profile Picture"/>
+                    ${imageUrl ? `<img src="${imageUrl}" alt="Profile Picture" />` : ''}
                     <h3 contenteditable="true">${name}</h3>
                 </div>
                 <div class="resume-section">
@@ -52,41 +102,56 @@ document.addEventListener('DOMContentLoaded', function (): void {
                 </div>
                 <div class="resume-section">
                     <h4>Education</h4>
-                    <p contenteditable="true">${education}</p>
+                    ${educationData.map(edu => `<p>${edu.education} (${edu.year})</p>`).join('')}
                 </div>
                 <div class="resume-section">
                     <h4>Work Experience</h4>
-                    <p contenteditable="true">${workExperience}</p>
+                    ${experienceData.map(exp => `<p>${exp.workExperience} (${exp.year})</p>`).join('')}
                 </div>
                 <div class="resume-section">
                     <h4>Skills</h4>
-                    <p contenteditable="true">${skills}</p>
+                    ${skillsData.map(skill => `<p>${skill.skill} (${skill.year})</p>`).join('')}
                 </div>
             `;
+
+            // Store the data in localStorage for sharing
+            const resumeData = {
+                name,
+                email,
+                phone,
+                profilePicture: imageUrl, // Store the profile picture URL
+                education: educationData,
+                workExperience: experienceData,
+                skills: skillsData,
+            };
+            localStorage.setItem('resumeData', JSON.stringify(resumeData));
+
+            // Generate a link to share the resume
+            const formattedName: string = name.trim().toLowerCase().replace(/\s+/g, '-');
+            const resumeURL: string = `resume.html?user=${formattedName}`;
+            resumeLink!.innerHTML = `Your resume link: <a href="${resumeURL}" target="_blank">${resumeURL}</a>`;
+
+            // Display the share and download buttons
+            shareDownloadOptions!.style.display = 'block';
         };
 
-        if (profilePicture) {
-            reader.readAsDataURL(profilePicture);
+        // If no file is selected, proceed without a profile picture
+        if (profilePictureFile) {
+            reader.readAsDataURL(profilePictureFile);
+        } else {
+            reader.onload(null); // Proceed without a profile picture
         }
-
-        // Generate a link with a query parameter to load the resume
-        const formattedName: string = name.trim().toLowerCase().replace(/\s+/g, '-');
-        const resumeURL: string = `resume.html?user=${formattedName}`;
-        resumeLink!.innerHTML = `Your resume link: <a href="${resumeURL}" target="_blank">${resumeURL}</a>`;
-
-        // Show the share and download buttons
-        shareDownloadOptions!.style.display = 'block';
     });
 
-    // Copy link to clipboard
+    // Copy link to clipboard functionality
     shareLinkBtn?.addEventListener('click', function (): void {
         const linkElement: HTMLAnchorElement | null = resumeLink?.querySelector('a') as HTMLAnchorElement;
         navigator.clipboard.writeText(linkElement?.href || '')
-            .then(function (): void { return alert('Link copied to clipboard!'); })
-            .catch(function (err: Error): void { return console.error('Failed to copy link:', err); });
+            .then(function (): void { alert('Link copied to clipboard!'); })
+            .catch(function (err: Error): void { console.error('Failed to copy link:', err); });
     });
 
-    // Download as PDF
+    // Download resume as PDF functionality
     downloadPdfBtn?.addEventListener('click', function (): void {
         const element: HTMLElement | null = document.getElementById('resume-preview');
         html2pdf().from(element).save();

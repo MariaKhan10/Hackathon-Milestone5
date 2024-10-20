@@ -18,15 +18,15 @@
         </div>
         <div class="resume-section">
             <h4>Education</h4>
-            <p id="resume-education"></p>
+            <div id="resume-education"></div>
         </div>
         <div class="resume-section">
             <h4>Work Experience</h4>
-            <p id="resume-workExperience"></p>
+            <div id="resume-workExperience"></div>
         </div>
         <div class="resume-section">
             <h4>Skills</h4>
-            <p id="resume-skills"></p>
+            <div id="resume-skills"></div>
         </div>
     </div>
 
@@ -42,10 +42,32 @@
                 document.getElementById('resume-name').textContent = resumeData.name;
                 document.getElementById('resume-email').textContent = resumeData.email;
                 document.getElementById('resume-phone').textContent = resumeData.phone;
-                document.getElementById('resume-education').textContent = resumeData.education;
-                document.getElementById('resume-workExperience').textContent = resumeData.workExperience;
-                document.getElementById('resume-skills').textContent = resumeData.skills;
 
+                // Display Education
+                const educationSection = document.getElementById('resume-education');
+                resumeData.education.forEach(edu => {
+                    const p = document.createElement('p');
+                    p.textContent = `${edu.education} (${edu.year})`;
+                    educationSection.appendChild(p);
+                });
+
+                // Display Work Experience
+                const workExperienceSection = document.getElementById('resume-workExperience');
+                resumeData.workExperience.forEach(exp => {
+                    const p = document.createElement('p');
+                    p.textContent = `${exp.workExperience} (${exp.year})`;
+                    workExperienceSection.appendChild(p);
+                });
+
+                // Display Skills
+                const skillsSection = document.getElementById('resume-skills');
+                resumeData.skills.forEach(skill => {
+                    const p = document.createElement('p');
+                    p.textContent = `${skill.skill} (${skill.year})`;
+                    skillsSection.appendChild(p);
+                });
+
+                // Display Profile Picture if available
                 if (resumeData.profilePicture) {
                     document.getElementById('profile-picture').src = resumeData.profilePicture;
                 }
