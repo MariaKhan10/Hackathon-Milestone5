@@ -157,3 +157,28 @@ document.addEventListener('DOMContentLoaded', function (): void {
         html2pdf().from(element).save();
     });
 });
+
+
+const shareResumeBtn: HTMLElement | null = document.getElementById('share-resume-btn');
+
+shareResumeBtn?.addEventListener('click', function (): void {
+    if (navigator.share) {
+        const name: string = (document.getElementById('name') as HTMLInputElement).value;
+        const email: string = (document.getElementById('email') as HTMLInputElement).value;
+
+        // Example text for sharing
+        const shareData = {
+            title: `${name}'s Resume`,
+            text: `Check out the resume of ${name}, available at the link provided.`,
+            url: window.location.href  // Link to the generated resume
+        };
+
+        navigator.share(shareData).then(() => {
+            console.log("Resume shared successfully!");
+        }).catch((error) => {
+            console.error("Error sharing resume:", error);
+        });
+    } else {
+        alert("Your device does not support sharing.");
+    }
+});
